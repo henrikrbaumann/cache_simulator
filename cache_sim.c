@@ -112,10 +112,12 @@ int main(int argc, char** argv)
  
     ways = cache_size/block_size;                       // Determine the number of ways in fa
     setbits = log2(cache_size/block_size);              // Determine the number of set bits
-    if (cache_mapping == fa)                            // Only one set in fa
+    if (cache_mapping == fa){                           // Only one set in fa
         setbits = 0;                                    // therefore it should be 0 setbits
+        fifo_d = ways/2;                                // Init the upper fifo counter
+    }
     if ((cache_org == sc) && (cache_mapping == dm))     // Sc in dm gives half the set range
-        setbits--;                                      // Remove one number of setbits
+        setbits--;                                      // Remove one number of setbits                                                  
     data_cache_offset = pow(2,(setbits));               // An offset equal to the number of sets
     tagbits = 32 - setbits - block_offset_bits;         // Determining the number of tagbits
 
@@ -223,7 +225,7 @@ static void direct_mapped()
 static int fa_cache(int start, int end, int fifo)
 {
     bool hit = false;                       // A variable to monitor whether it is a hit or a miss
-    for (int i = start; i <= end; i++)      // Looping through the cache looking for a match
+    for (int i = start; i < end; i++)      // Looping through the cache looking for a match
         {
             // Checking if the tag of the cache matches the tag bits of the address, and if it is valid
             if ((ptr + i) -> tag == access.address >> (32 - tagbits) && (ptr + i) -> valid)
