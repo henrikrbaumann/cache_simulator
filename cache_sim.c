@@ -164,8 +164,8 @@ int main(int argc, char** argv)
     /* Print the statistics */
     printf("\nCache Statistics\n");
     printf("-----------------\n\n");
-    printf("Accesses: %ld\n", cache_statistics.accesses);
-    printf("Hits:     %ld\n", cache_statistics.hits);
+    printf("Accesses: %llu\n", cache_statistics.accesses);
+    printf("Hits:     %llu\n", cache_statistics.hits);
     printf("Hit Rate: %.4f\n", (double) cache_statistics.hits / cache_statistics.accesses);
 
     /* Close the trace file */
